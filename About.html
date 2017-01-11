@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>robo-hawks robotics</title>
+    <link rel="icon" href="http://icons.iconarchive.com/icons/iconka/meow/256/cat-grumpy-icon.png" type=image/x-icon"></link>
+</head>
+<body>
+    <style>
+        .w3-col.m8, .w3-twothird {
+   font-size:larger;
+}
+.w3-col, .w3-half, .w3-third, .w3-twothird, .w3-threequarter, .w3-quarter {
+    float: left;
+    width: 100%;
+}
+
+ul.horizontal {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: darkblue;
+}
+
+
+ul.horizontal li {
+    float: left;
+}
+
+
+ul.horizontal li a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+ul.horizontal li a:hover:not(.active) {
+    background-color: #000;
+}
+
+
+ul.horizontal li a.active {
+    background-color:#4CAF50;
+}
+    </style>
+    <div class="w3-col m8">
+        <ul class="horizontal">
+          <li><a href="home.html">Home</a></li>
+            <li><a  href="team.html">Team</a></li>
+            <li><a href="project.html">Project</a></li>
+           <li><a href="robot.html">Robot</a></li>
+ <li class="rightli" style="float:right"><a class="active" href="about.html">About</a></li>
+
+
+        </ul>
+        
+    </div>
+       
+    <div style="border:5px solid black;height:100% ">
+        <div style="width:90%;height:800px;text-align:center">
+
+            <h2>
+                Contact Us, we would love to hear from you.
+            </h2>
+       <div class="w3-col m8">
+                <form id="javascript_form">
+                    <div class="m8">
+                        <label>Subject</label>
+                        <input type="text" name="subject" placeholder="Robo-Hawks" />
+                    </div>
+                    <div class="m8">
+                        <label>Messasge</label>
+                        <textarea name="text" placeholder="Message" style="width:500px;height:200px"></textarea>
+                    </div>
+                    <input style="background-color:#4CAF50;color:white" type="submit" id="js_send" value="Send" />
+                </form>
+            </div>
+        </div>
+        </div>
+        <script>
+
+
+            //update this with your js_form selector
+            var form_id_js = "javascript_form";
+
+
+            var data_js = {
+                "access_token": "3cyisj2diuzy04r0c6fcm9ag" // sent after you sign up
+            };
+
+
+            function js_onSuccess() {
+                // remove this to avoid redirect
+                window.location = window.location.pathname + "?message=Email+Successfully+Sent%21&isError=0";
+            }
+
+
+            function js_onError(error) {
+                // remove this to avoid redirect
+                window.location = window.location.pathname + "?message=Email+could+not+be+sent.&isError=1";
+            }
+
+
+            var sendButton = document.getElementById("js_send");
+
+
+            function js_send() {
+                sendButton.value = 'Sending…';
+                sendButton.disabled = true;
+                var request = new XMLHttpRequest();
+                request.onreadystatechange = function () {
+                    if (request.readyState == 4 && request.status == 200) {
+                        js_onSuccess();
+                    } else
+                        if (request.readyState == 4) {
+                            js_onError(request.response);
+                        }
+                };
+
+
+                var subject = document.querySelector("#" + form_id_js + " [name='subject']").value;
+                var message = document.querySelector("#" + form_id_js + " [name='text']").value;
+                data_js['subject'] = subject;
+                data_js['text'] = message;
+                var params = toParams(data_js);
+
+
+                request.open("POST", "https://postmail.invotes.com/send", true);
+                request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+
+                request.send(params);
+
+
+                return false;
+            }
+
+
+            sendButton.onclick = js_send;
+
+
+            function toParams(data_js) {
+                var form_data = [];
+                for (var key in data_js) {
+                    form_data.push(encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key]));
+                }
+
+
+                return form_data.join("&");
+            }
+
+
+            var js_form = document.getElementById(form_id_js);
+            js_form.addEventListener("submit", function (e) {
+                e.preventDefault();
+            });
+        </script>
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
